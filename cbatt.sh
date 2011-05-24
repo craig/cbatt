@@ -5,6 +5,7 @@
 # 24.05.2011 - Stefan Behte
 
 echo -n '['
+
 if [ "$1" = "color" ]
 then
 	echo -n '<span color="red">'
