@@ -1,0 +1,44 @@
+cbatt - text printout for battery usage/time for text-based status bars;
+useful for window managers like awesome, wmii, xmonad etc.
+
+Example output:
+
+$ ./cbatt.sh 
+[+46%/01:05]
+
+'+'	AC is connected
+'46%'	Battery charge status
+'01:05'	time till charged
+
+
+$ ./cbatt.sh
+[45%/02:13]
+
+no '+'	AC not connected
+'45%'	Battery charge status
+'02:13'	time till uncharged
+
+
+#### Awesome configuration
+
+
+-- battery monitoring
+mybattmon = widget({ type = "textbox", name = "mybattmon", align = "right" })
+function battery_status ()
+        local fd=io.popen("/home/you/cbatt.sh", "r")
+        local line=fd:read()
+        return line
+end
+
+mybattmon.text = " " .. battery_status() .. " "
+my_battmon_timer=timer({timeout=10})
+my_battmon_timer:add_signal("timeout", function()
+    mybattmon.text = " " .. battery_status() .. " "
+end)
+my_battmon_timer:start()
+
+--
+
+In mywibox[s].widgets = { ... }, add mybattmon.
+
+
