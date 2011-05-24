@@ -19,8 +19,11 @@ no '+'	AC not connected
 '02:13'	time till uncharged
 
 
-#### Awesome configuration
+Call cbatt with the parameter "color" to get coloring for awesome.
+Edit the color in cbatt.sh as needed (defaults to red).
 
+
+#### Awesome configuration
 
 -- battery monitoring
 mybattmon = widget({ type = "textbox", name = "mybattmon", align = "right" })
