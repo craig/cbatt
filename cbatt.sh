@@ -24,6 +24,9 @@ then
 	echo -n "${acpiout}" | awk '{print $4, $5}' | sed -e 's@,@/@g' -e 's@ @@g' | tr -d '\n'
 	echo -n '/unknown'
 
+elif [ -n "$(echo -n ${acpiout} | grep 'Full, 100%')" ]
+then
+	echo -n "100%"
 else
 	echo -n "${acpiout}" | awk '{print $4, $5}' | sed 's@, @/@g' | awk -F: '{print $1 ":" $2}' | tr -d '\n'
 fi
