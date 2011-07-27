@@ -8,10 +8,30 @@ echo -n '['
 
 if [ "$1" = "color" ]
 then
-	echo -n '<span color="red">'
+## first check for charging, then specify color
+#	echo -n '<span color="red">'
+	COLOR=true
+else
+	COLOR=false
 fi
 
-grep -q 1 /sys/class/power_supply/AC/online && echo -n "+"
+if grep -q 1 /sys/class/power_supply/AC/online
+then
+	CHARGING=true
+else
+	CHARGING=false
+fi
+
+if $COLOR
+then
+	if $CHARGING; then
+		echo -n '<span color="green">'
+	else
+		echo -n '<span color="red">'
+	fi
+fi
+
+$CHARGING && echo -n "+"
 
 acpiout=$(acpi)
 if [ -n "$(echo -n ${acpiout} | grep 'charging at zero rate - will never fully charge.')" ]
@@ -31,10 +51,9 @@ else
 	echo -n "${acpiout}" | awk '{print $4, $5}' | sed 's@, @/@g' | awk -F: '{print $1 ":" $2}' | tr -d '\n'
 fi
 
-if [ "$1" = "color" ]
+if $COLOR
 then
 	echo -n '</span>'
 fi
 
 echo -n ']'
-
