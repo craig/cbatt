@@ -8,7 +8,7 @@ echo -n '['
 
 if [ "$1" = "color" ]
 then
-	echo -n '<span color="red">'
+	echo -n '<span color="green">'
 fi
 
 grep -q 1 /sys/class/power_supply/AC/online && echo -n "+"
